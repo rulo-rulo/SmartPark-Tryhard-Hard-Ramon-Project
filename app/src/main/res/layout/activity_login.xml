@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Iniciar sesión con:"
+        app:layout_constraintEnd_toEndOf="@+id/contrasenaOlvidada"
+        app:layout_constraintStart_toStartOf="@+id/contrasenaOlvidada"
+        app:layout_constraintTop_toBottomOf="@+id/contrasenaOlvidada" />
+
+    <Button
+        android:id="@+id/volver3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#E72941"
+        android:text="Volver"
+        app:cornerRadius="8px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Inicio de sesión"
+        android:textColor="#000000"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/volver3" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="229dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Introduzca su correo electrónico asociado a su cuenta:"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/loginCorreo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Introduzca su contraseña:"
+        app:layout_constraintEnd_toEndOf="@+id/loginCorreo"
+        app:layout_constraintStart_toStartOf="@+id/loginCorreo"
+        app:layout_constraintTop_toBottomOf="@+id/loginCorreo" />
+
+    <EditText
+        android:id="@+id/loginContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/gotoRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="¿No tienes una cuenta? Regístrate"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/googleLogin"
+        app:layout_constraintStart_toStartOf="@+id/googleLogin"
+        app:layout_constraintTop_toBottomOf="@+id/googleLogin" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#E72941"
+        android:text="Iniciar sesión"
+        app:layout_constraintEnd_toEndOf="@+id/loginContrasena"
+        app:layout_constraintStart_toStartOf="@+id/loginContrasena"
+        app:layout_constraintTop_toBottomOf="@+id/loginContrasena"
+        tools:cornerRadius="8px" />
+
+    <TextView
+        android:id="@+id/contrasenaOlvidada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="He olvidado mi contraseña"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <ImageButton
+        android:id="@+id/googleLogin"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:srcCompat="@drawable/google_login" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

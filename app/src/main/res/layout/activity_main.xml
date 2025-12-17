@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/Titulo_Landing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="¡Busca tu plaza ideal!"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="224dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="Queremos que encuentres de manera rápida y cómoda el mejor sitio más cercano a ti o a tu destino, y siempre de la forma más asequible posible."
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/Titulo_Landing"
+        app:layout_constraintStart_toStartOf="@+id/Titulo_Landing"
+        app:layout_constraintTop_toBottomOf="@+id/Titulo_Landing" />
+
+    <Button
+        android:id="@+id/btn_Registrate"
+        style="@style/Btn_Landing"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#E72941"
+        android:text="Registrate"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="136dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="¿Ya tienes cuenta? ¡Inicia sesión y no pierdas tus ventajas!"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/btn_Registrate"
+        app:layout_constraintStart_toStartOf="@+id/btn_Registrate"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Registrate" />
+
+    <Button
+        android:id="@+id/Btn_Inicio_Sesión"
+        style="@style/Btn_Landing"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#E72941"
+        android:text="Inicia Sesión"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/textView11"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="193dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="50dp"
+        android:background="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Btn_Inicio_Sesión" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="198dp"
+        android:layout_height="196dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/img" />
+
+    <TextView
+        android:id="@+id/contrasenaOlvidada"
+        android:layout_width="110dp"
+        android:layout_height="93dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Disfruta de  todas nuestras ventajas en la  app."
+        android:textColor="#FAFAFA"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="INICIA SESIÓN YA!"
+        android:textColor="#FAFAFA"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/contrasenaOlvidada"
+        app:layout_constraintStart_toStartOf="@+id/contrasenaOlvidada"
+        app:layout_constraintTop_toBottomOf="@+id/contrasenaOlvidada" />
+
+    <LinearLayout
+        android:id="@+id/bottom_tabs"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="#E72941"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Tab Mapas -->
+        <LinearLayout
+            android:id="@+id/mapas"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/imagen_tab_ubicacion" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mapas"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <!-- Tab Home -->
+        <LinearLayout
+            android:id="@+id/home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/imagen_tab_home" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <!-- Tab Cuenta -->
+        <LinearLayout
+            android:id="@+id/cuenta"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/imagen_tab_cuenta" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuenta"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

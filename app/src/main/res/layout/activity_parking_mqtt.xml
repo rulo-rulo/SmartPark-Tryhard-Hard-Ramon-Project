@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="top">
+
+    <TextView
+        android:id="@+id/txtConnection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MQTT: desconectado"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#333333" />
+
+    <TextView
+        android:id="@+id/txtPlaza"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Plaza: ---"
+        android:textSize="22sp"
+        android:layout_marginTop="24dp"
+        android:textColor="#000000" />
+
+
+    <TextView
+        android:id="@+id/txtLed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LED: ---"
+        android:textSize="22sp"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/btnToggleLed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Encender LED"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF"
+        android:padding="16dp" />
+
+</LinearLayout>
