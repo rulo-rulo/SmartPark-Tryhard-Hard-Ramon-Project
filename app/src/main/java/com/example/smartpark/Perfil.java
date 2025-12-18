@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,6 +43,16 @@ public class Perfil extends AppCompatActivity {
     private ActivityResultLauncher<String> selectorImagenLauncher;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.perfil);
@@ -58,7 +71,7 @@ public class Perfil extends AppCompatActivity {
             cargarDatosUsuario(user.getUid());
         }
 
-        // 🔹 Registrar el launcher para pedir permiso de almacenamiento
+        // Registrar el launcher para pedir permiso de almacenamiento
         permisoGaleriaLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
@@ -70,7 +83,7 @@ public class Perfil extends AppCompatActivity {
                 }
         );
 
-        // 🔹 Registrar launcher para seleccionar una imagen
+        // Registrar launcher para seleccionar una imagen
         selectorImagenLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -226,11 +239,6 @@ public class Perfil extends AppCompatActivity {
                 startActivity(new Intent(this, HomePage.class))
         );
 
-        LinearLayout cuentaTab = findViewById(R.id.cuenta);
-        cuentaTab.setOnClickListener(view ->
-                startActivity(new Intent(this, Perfil.class))
-        );
-
         LinearLayout mapasTab = findViewById(R.id.mapas);
         mapasTab.setOnClickListener(view ->
                 startActivity(new Intent(this, Mapa.class))
@@ -243,12 +251,24 @@ public class Perfil extends AppCompatActivity {
 
         Button cerrarSesionBtn = findViewById(R.id.cerrarSesion);
         cerrarSesionBtn.setOnClickListener(view -> {
-            mAuth.signOut();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+
+            FirebaseAuth.getInstance().signOut();
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestIdToken(getString(R.string.default_web_client_id))
+                    .requestEmail()
+                    .build();
+
+            GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(this, gso);
+            googleSignInClient.signOut().addOnCompleteListener(task -> {
+
+                Intent intent = new Intent(Perfil.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
         });
+
     }
 
     public void lanzarAcercaDe(android.view.View view){

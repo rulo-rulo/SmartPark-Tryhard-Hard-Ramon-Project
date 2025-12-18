@@ -22,9 +22,17 @@ public class HomePage extends AppCompatActivity {
     private FirebaseFirestore db;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.home_page);
 
         // Inicializar Firebase
@@ -71,13 +79,6 @@ public class HomePage extends AppCompatActivity {
         Button alMapaBtn = findViewById(R.id.al_Mapa);
         alMapaBtn.setOnClickListener(view -> {
             Intent intent = new Intent(HomePage.this, Mapa.class);
-            startActivity(intent);
-        });
-
-        // Tab "Home"
-        LinearLayout homeTab = findViewById(R.id.home);
-        homeTab.setOnClickListener(view -> {
-            Intent intent = new Intent(HomePage.this, HomePage.class);
             startActivity(intent);
         });
 
