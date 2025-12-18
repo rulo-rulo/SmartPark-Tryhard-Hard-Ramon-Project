@@ -52,6 +52,7 @@ public class ReservaActivity extends AppCompatActivity {
         // Recibe los datos del parking desde el intent
         parkingId = getIntent().getStringExtra("parkingId");
         nombreParking = getIntent().getStringExtra("nombreParking");
+
         plazasTotales = getIntent().getIntExtra("plazasTotales", 0);
 
         txtTitulo.setText("Reservar plaza en " + nombreParking);
@@ -104,7 +105,6 @@ public class ReservaActivity extends AppCompatActivity {
 
         String uid = user.getUid();
 
-        // 🔹 1. Comprobar si el usuario ya tiene una reserva para ese día
         db.collection("usuarios")
                 .document(uid)
                 .collection("reservas")
@@ -149,7 +149,7 @@ public class ReservaActivity extends AppCompatActivity {
             Toast.makeText(this, "Reserva confirmada para " + fechaSeleccionada, Toast.LENGTH_SHORT).show();
             actualizarPlazasLibres(fechaSeleccionada);
 
-            // 🔹 Guardar también la reserva en el usuario
+            // Guardar también la reserva en el usuario
             Map<String, Object> reservaUsuario = new HashMap<>();
             reservaUsuario.put("parkingId", parkingId);
             reservaUsuario.put("nombreParking", nombreParking);

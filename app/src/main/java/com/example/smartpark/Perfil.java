@@ -58,7 +58,6 @@ public class Perfil extends AppCompatActivity {
             cargarDatosUsuario(user.getUid());
         }
 
-        // 🔹 Registrar el launcher para pedir permiso de almacenamiento
         permisoGaleriaLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
@@ -70,7 +69,6 @@ public class Perfil extends AppCompatActivity {
                 }
         );
 
-        // 🔹 Registrar launcher para seleccionar una imagen
         selectorImagenLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -102,7 +100,7 @@ public class Perfil extends AppCompatActivity {
                             Glide.with(this)
                                     .load(fotoUrl)
                                     .circleCrop()
-                                    .placeholder(R.drawable.foto_perfil) // opcional, imagen por defecto
+                                    .placeholder(R.drawable.foto_perfil)
                                     .into(fotoPerfil);
                         }
                     } else {
@@ -180,11 +178,9 @@ public class Perfil extends AppCompatActivity {
                         .addOnSuccessListener(downloadUri -> {
                             String url = downloadUri.toString();
 
-                            // 🔹 Guardar URL en Firestore
                             db.collection("usuarios").document(uid)
                                     .update("fotoPerfil", url)
                                     .addOnSuccessListener(aVoid -> {
-                                        // 🔸 Aquí reemplazamos la línea por Glide circular
                                         Glide.with(this)
                                                 .load(url)
                                                 .circleCrop()
