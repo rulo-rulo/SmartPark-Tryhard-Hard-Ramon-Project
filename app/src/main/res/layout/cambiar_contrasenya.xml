@@ -63,6 +63,7 @@
         android:background="@color/grey"
         android:ems="10"
         android:inputType="text"
+        android:password="true"
         android:text="" />
 
     <!-- Texto para que repita la contraseña -->
@@ -85,6 +86,7 @@
         android:background="@color/grey"
         android:ems="10"
         android:inputType="text"
+        android:password="true"
         android:text="" />
 
     <!-- Boton de confirmar cambio de contraseña -->
