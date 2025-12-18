@@ -97,7 +97,7 @@
 
     <!-- Campo para el código -->
     <EditText
-        android:id="@+id/editCode"
+        android:id="@+id/contraseñaCorreo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="50dp"

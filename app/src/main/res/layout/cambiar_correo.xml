@@ -70,34 +70,23 @@
         android:text="" />
 
     <!-- Botón Enviar correo -->
-    <Button
-        android:id="@+id/btnSendEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="@color/red"
-        android:text="Enviar correo"
-        android:textAlignment="center"
-        android:textSize="14sp"
-        app:cornerRadius="8dp" />
 
     <!-- Texto para el código -->
+
+    <!-- Campo para el código -->
     <TextView
         android:id="@+id/textCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:text="Introduzca su código:"
+        android:text="Introduzca su contraseña:"
         android:textAlignment="center"
         android:textSize="18dp" />
 
-    <!-- Campo para el código -->
     <EditText
-        android:id="@+id/editCode"
+        android:id="@+id/contraseñaCorreo"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="50dp"
@@ -107,6 +96,7 @@
         android:ems="10"
         android:inputType="number"
         android:padding="8dp"
+        android:password="true"
         android:text="" />
 
     <!-- Botón Confirmar -->
