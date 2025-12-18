@@ -130,8 +130,8 @@
         android:layout_marginStart="24dp"
         android:text="Nombre"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintStart_toEndOf="@+id/fotoPerfil"
+        app:layout_constraintTop_toTopOf="@+id/fotoPerfil" />
 
     <Button
         android:id="@+id/volver"
@@ -158,7 +158,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/fotoPerfil"
         android:layout_width="113dp"
         android:layout_height="110dp"
         android:layout_marginStart="8dp"

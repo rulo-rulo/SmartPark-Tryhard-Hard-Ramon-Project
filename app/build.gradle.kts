@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -42,6 +41,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.play.services.location)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -51,4 +51,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.1.0")
     implementation("com.google.firebase:firebase-firestore:25.1.1")
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
 }
