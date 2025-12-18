@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -134,10 +135,26 @@ public class Mapa extends AppCompatActivity implements OnMapReadyCallback {
                         String nombreParking = marker.getTitle();
 
                         if (parkingId != null) {
-                            Intent intent = new Intent(Mapa.this, ReservaActivity.class);
-                            intent.putExtra("parkingId", parkingId);
-                            intent.putExtra("nombreParking", nombreParking);
-                            startActivity(intent);
+                            // Buscar el documento del parking clicado para obtener las plazas totales
+                            db.collection("parkings").document(parkingId)
+                                    .get()
+                                    .addOnSuccessListener(doc -> {
+                                        if (doc.exists()) {
+                                            Long plazasTotales = doc.getLong("plazas");
+                                            int plazasInt = plazasTotales != null ? plazasTotales.intValue() : 0;
+
+                                            Intent intent = new Intent(Mapa.this, ReservaActivity.class);
+                                            intent.putExtra("parkingId", parkingId);
+                                            intent.putExtra("nombreParking", nombreParking);
+                                            intent.putExtra("plazasTotales", plazasInt);
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(this, "No se encontró información del parking", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Error al obtener datos del parking", Toast.LENGTH_SHORT).show()
+                                    );
                         } else {
                             Toast.makeText(this, "Parking sin información", Toast.LENGTH_SHORT).show();
                         }

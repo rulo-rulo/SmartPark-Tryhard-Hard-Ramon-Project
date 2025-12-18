@@ -30,6 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Perfil extends AppCompatActivity {
 
     private TextView nombre, correo;
@@ -71,7 +74,6 @@ public class Perfil extends AppCompatActivity {
             cargarDatosUsuario(user.getUid());
         }
 
-        // Registrar el launcher para pedir permiso de almacenamiento
         permisoGaleriaLauncher = registerForActivityResult(
                 new ActivityResultContracts.RequestPermission(),
                 isGranted -> {
@@ -83,7 +85,6 @@ public class Perfil extends AppCompatActivity {
                 }
         );
 
-        // Registrar launcher para seleccionar una imagen
         selectorImagenLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -100,10 +101,14 @@ public class Perfil extends AppCompatActivity {
     }
 
     private void cargarDatosUsuario(String uid) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) return;
+
         db.collection("usuarios").document(uid)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
+                        // 🔹 Si el documento existe, carga los datos desde Firestore
                         String nombreUsuario = documentSnapshot.getString("nombre");
                         String correoUsuario = documentSnapshot.getString("correo");
                         String fotoUrl = documentSnapshot.getString("fotoPerfil");
@@ -115,11 +120,46 @@ public class Perfil extends AppCompatActivity {
                             Glide.with(this)
                                     .load(fotoUrl)
                                     .circleCrop()
-                                    .placeholder(R.drawable.foto_perfil) // opcional, imagen por defecto
+                                    .placeholder(R.drawable.foto_perfil)
                                     .into(fotoPerfil);
+                        } else {
+                            fotoPerfil.setImageResource(R.drawable.foto_perfil);
                         }
+
                     } else {
-                        nombre.setText("Usuario no encontrado");
+                        // 🔹 Si no existe, probablemente es login con Google → crear registro Firestore
+                        String nombreGoogle = user.getDisplayName();
+                        String correoGoogle = user.getEmail();
+                        String fotoGoogle = user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null;
+
+                        // Mostrar los datos en pantalla igualmente
+                        nombre.setText(nombreGoogle != null ? nombreGoogle : "Sin nombre");
+                        correo.setText(correoGoogle != null ? correoGoogle : "Sin correo");
+
+                        if (fotoGoogle != null) {
+                            Glide.with(this)
+                                    .load(fotoGoogle)
+                                    .circleCrop()
+                                    .placeholder(R.drawable.foto_perfil)
+                                    .into(fotoPerfil);
+                        } else {
+                            fotoPerfil.setImageResource(R.drawable.foto_perfil);
+                        }
+
+                        // Crear el documento automáticamente en Firestore
+                        Map<String, Object> nuevoUsuario = new HashMap<>();
+                        nuevoUsuario.put("nombre", nombreGoogle);
+                        nuevoUsuario.put("correo", correoGoogle);
+                        nuevoUsuario.put("fotoPerfil", fotoGoogle);
+
+                        db.collection("usuarios").document(uid)
+                                .set(nuevoUsuario)
+                                .addOnSuccessListener(aVoid ->
+                                        Toast.makeText(this, "Perfil creado en Firestore", Toast.LENGTH_SHORT).show()
+                                )
+                                .addOnFailureListener(e ->
+                                        Toast.makeText(this, "Error al crear perfil en Firestore", Toast.LENGTH_SHORT).show()
+                                );
                     }
                 })
                 .addOnFailureListener(e ->
@@ -193,11 +233,9 @@ public class Perfil extends AppCompatActivity {
                         .addOnSuccessListener(downloadUri -> {
                             String url = downloadUri.toString();
 
-                            // 🔹 Guardar URL en Firestore
                             db.collection("usuarios").document(uid)
                                     .update("fotoPerfil", url)
                                     .addOnSuccessListener(aVoid -> {
-                                        // 🔸 Aquí reemplazamos la línea por Glide circular
                                         Glide.with(this)
                                                 .load(url)
                                                 .circleCrop()

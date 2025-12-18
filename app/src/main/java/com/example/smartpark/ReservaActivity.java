@@ -1,5 +1,11 @@
 package com.example.smartpark;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -8,15 +14,16 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,10 +38,11 @@ public class ReservaActivity extends AppCompatActivity {
     private String parkingId;
     private String nombreParking;
     private int plazasTotales;
-
     private String fechaSeleccionada = "";
 
     private FirebaseFirestore db;
+
+    private static final String CANAL_ID = "reservas_parking";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +57,45 @@ public class ReservaActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // Recibe los datos del parking desde el intent
+        // 🔔 Crear canal de notificaciones (obligatorio Android 8+)
+        crearCanalNotificaciones();
+
         parkingId = getIntent().getStringExtra("parkingId");
         nombreParking = getIntent().getStringExtra("nombreParking");
         plazasTotales = getIntent().getIntExtra("plazasTotales", 0);
 
         txtTitulo.setText("Reservar plaza en " + nombreParking);
 
-        // Por defecto, fecha de hoy
         fechaSeleccionada = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 .format(new Date());
 
-        // Mostrar plazas para la fecha inicial
         actualizarPlazasLibres(fechaSeleccionada);
 
-        // Cambia la fecha seleccionada cuando el usuario elige otro día
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            fechaSeleccionada = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, month + 1, dayOfMonth);
+            fechaSeleccionada = String.format(
+                    Locale.getDefault(),
+                    "%04d-%02d-%02d",
+                    year, month + 1, dayOfMonth
+            );
             actualizarPlazasLibres(fechaSeleccionada);
         });
 
         btnConfirmar.setOnClickListener(v -> confirmarReserva());
+    }
+
+    private void crearCanalNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel canal = new NotificationChannel(
+                    CANAL_ID,
+                    "Reservas de parking",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+            canal.setDescription("Avisos sobre tus reservas");
+
+            NotificationManager manager =
+                    getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(canal);
+        }
     }
 
     private void actualizarPlazasLibres(String fecha) {
@@ -85,26 +111,19 @@ public class ReservaActivity extends AppCompatActivity {
             }
             long libres = plazasTotales - reservadas;
             txtPlazasLibres.setText("Plazas libres: " + libres + " / " + plazasTotales);
-        }).addOnFailureListener(e -> {
-            txtPlazasLibres.setText("Error al cargar plazas");
         });
     }
 
     private void confirmarReserva() {
-        if (fechaSeleccionada.isEmpty()) {
-            Toast.makeText(this, "Selecciona una fecha", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
-            Toast.makeText(this, "Error: usuario no autenticado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Usuario no autenticado", Toast.LENGTH_SHORT).show();
             return;
         }
 
         String uid = user.getUid();
 
-        // 🔹 1. Comprobar si el usuario ya tiene una reserva para ese día
         db.collection("usuarios")
                 .document(uid)
                 .collection("reservas")
@@ -113,43 +132,52 @@ public class ReservaActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
-                        // Ya tiene una reserva ese día
-                        Toast.makeText(this, "Ya tienes una reserva activa para este día.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,
+                                "Ya tienes una reserva ese día",
+                                Toast.LENGTH_SHORT).show();
                     } else {
-                        // No tiene reserva -> continuar con la creación
                         crearReserva(uid);
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error al comprobar reservas del usuario", Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void crearReserva(String uid) {
+
         DocumentReference reservaDiaRef = db.collection("parkings")
                 .document(parkingId)
                 .collection("reservas")
                 .document(fechaSeleccionada);
 
         db.runTransaction(transaction -> {
+
             DocumentSnapshot snapshot = transaction.get(reservaDiaRef);
+            long reservadas = snapshot.exists() ?
+                    snapshot.getLong("plazasReservadas") : 0;
 
-            long reservadas = snapshot.exists() ? snapshot.getLong("plazasReservadas") : 0;
-
-            if (reservadas < plazasTotales) {
-                transaction.set(reservaDiaRef,
-                        new ReservaDia(reservadas + 1),
-                        com.google.firebase.firestore.SetOptions.merge());
-            } else {
-                throw new RuntimeException("No hay plazas disponibles para ese día");
+            if (reservadas >= plazasTotales) {
+                throw new RuntimeException("No hay plazas disponibles");
             }
 
+            Map<String, Object> update = new HashMap<>();
+            update.put("plazasReservadas", reservadas + 1);
+            transaction.set(reservaDiaRef, update,
+                    com.google.firebase.firestore.SetOptions.merge());
+
             return null;
+
         }).addOnSuccessListener(aVoid -> {
-            Toast.makeText(this, "Reserva confirmada para " + fechaSeleccionada, Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(this,
+                    "Reserva confirmada para " + fechaSeleccionada,
+                    Toast.LENGTH_SHORT).show();
+
             actualizarPlazasLibres(fechaSeleccionada);
 
-            // 🔹 Guardar también la reserva en el usuario
+            mostrarNotificacionReservaCreada();
+
+            programarNotificaciones();
+
+            // Guardar reserva en el usuario
             Map<String, Object> reservaUsuario = new HashMap<>();
             reservaUsuario.put("parkingId", parkingId);
             reservaUsuario.put("nombreParking", nombreParking);
@@ -160,32 +188,86 @@ public class ReservaActivity extends AppCompatActivity {
             db.collection("usuarios")
                     .document(uid)
                     .collection("reservas")
-                    .add(reservaUsuario)
-                    .addOnSuccessListener(ref -> {
-                        Toast.makeText(this, "Reserva guardada en tu perfil", Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e ->
-                            Toast.makeText(this, "Error al guardar reserva en usuario", Toast.LENGTH_SHORT).show()
-                    );
+                    .add(reservaUsuario);
 
-        }).addOnFailureListener(e -> {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+        }).addOnFailureListener(e ->
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show()
+        );
     }
 
-    // Clase auxiliar para crear o actualizar el documento de reservas
-    public static class ReservaDia {
-        private long plazasReservadas;
 
-        public ReservaDia() {}
+    private void mostrarNotificacionReservaCreada() {
 
-        public ReservaDia(long plazasReservadas) {
-            this.plazasReservadas = plazasReservadas;
+        NotificationManager manager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder notificacion =
+                new NotificationCompat.Builder(this, CANAL_ID)
+                        .setSmallIcon(android.R.drawable.ic_dialog_info)
+                        .setContentTitle("Reserva confirmada 🚗")
+                        .setContentText("Reserva en " + nombreParking +
+                                " para el día " + fechaSeleccionada)
+                        .setAutoCancel(true);
+
+        manager.notify((int) System.currentTimeMillis(),
+                notificacion.build());
+    }
+
+    private void programarNotificaciones() {
+
+        try {
+            SimpleDateFormat sdf =
+                    new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date fechaReserva = sdf.parse(fechaSeleccionada);
+
+            if (fechaReserva == null) return;
+
+            AlarmManager alarmManager =
+                    (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            // --- Día antes ---
+            long diaAntes = fechaReserva.getTime()
+                    - (24 * 60 * 60 * 1000);
+
+            programarAlarma(alarmManager,
+                    diaAntes,
+                    "Recuerda tu reserva mañana en " + nombreParking);
+
+            // --- Mismo día (8:00) ---
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fechaReserva);
+            cal.set(Calendar.HOUR_OF_DAY, 8);
+            cal.set(Calendar.MINUTE, 0);
+
+            programarAlarma(alarmManager,
+                    cal.getTimeInMillis(),
+                    "Hoy tienes una reserva en " + nombreParking);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        public long getPlazasReservadas() {
-            return plazasReservadas;
-        }
+    private void programarAlarma(AlarmManager alarmManager,
+                                 long tiempo,
+                                 String mensaje) {
+
+        Intent intent = new Intent(this, ReservaNotificationReceiver.class);
+        intent.putExtra("mensaje", mensaje);
+        intent.putExtra("fecha", fechaSeleccionada);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                (int) System.currentTimeMillis(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                tiempo,
+                pendingIntent
+        );
     }
 }
 
