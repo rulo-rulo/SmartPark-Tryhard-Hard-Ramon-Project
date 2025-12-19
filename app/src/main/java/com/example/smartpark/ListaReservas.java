@@ -27,9 +27,9 @@ public class ListaReservas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.lista_reservas);
 
+        findViewById(R.id.btnVolverPreguntas).setOnClickListener(v -> finish());
         recyclerView = findViewById(R.id.recyclerReservas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

@@ -24,9 +24,9 @@ public class ListaParkings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.lista_parkings);
 
+        findViewById(R.id.volver4).setOnClickListener(v -> finish());
         recyclerView = findViewById(R.id.recyclerParkings);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ParkingAdapter(listaParkings);

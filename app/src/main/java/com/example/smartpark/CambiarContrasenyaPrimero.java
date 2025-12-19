@@ -11,10 +11,9 @@ public class CambiarContrasenyaPrimero extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.cambiar_contrasenya_primero);
 
-        Button volverBtn = findViewById(R.id.atras);
+        Button volverBtn = findViewById(R.id.button3);
         volverBtn.setOnClickListener(view -> {
             finish();
         });

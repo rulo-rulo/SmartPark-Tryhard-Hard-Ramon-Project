@@ -30,21 +30,21 @@ public class MainActivity extends AppCompatActivity {
         // Tab "Mapas"
         LinearLayout mapasTab = findViewById(R.id.mapas);
         mapasTab.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, Mapa.class);
             startActivity(intent);
         });
 
         // Tab "Home"
         LinearLayout homeTab = findViewById(R.id.home);
         homeTab.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, HomePage.class);
             startActivity(intent);
         });
 
         // Botón "Cuenta"
         LinearLayout cuentaTab = findViewById(R.id.cuenta);
         cuentaTab.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, Perfil.class);
             startActivity(intent);
         });
 

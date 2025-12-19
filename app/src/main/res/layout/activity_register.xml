@@ -15,16 +15,18 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#E72941"
         android:text="Volver"
+        android:textSize="14sp"
         app:cornerRadius="8px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Introduzca el correo que desee:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/registroNombre"
         app:layout_constraintStart_toStartOf="@+id/registroNombre"
         app:layout_constraintTop_toBottomOf="@+id/registroNombre" />
@@ -33,7 +35,7 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="65dp"
         android:text="Registro"
         android:textColor="#000000"
         android:textSize="45sp"
@@ -44,7 +46,7 @@
 
     <EditText
         android:id="@+id/registroContrasena"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
@@ -54,7 +56,7 @@
 
     <EditText
         android:id="@+id/registroNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
@@ -64,7 +66,7 @@
 
     <EditText
         android:id="@+id/registroConfirmarContrasena"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
@@ -74,28 +76,31 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="19dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Confirmar contraseña:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/registroContrasena"
         app:layout_constraintStart_toStartOf="@+id/registroContrasena"
         app:layout_constraintTop_toBottomOf="@+id/registroContrasena" />
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="229dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Introduzca el nombre que quiere tener asociado a su cuenta: "
+        android:text="Introduzca su nombre"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
         android:id="@+id/registroCorreo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
@@ -105,10 +110,11 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Introduzca la contraseña que desee:"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/registroCorreo"
         app:layout_constraintStart_toStartOf="@+id/registroCorreo"
         app:layout_constraintTop_toBottomOf="@+id/registroCorreo" />
@@ -120,6 +126,7 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="#E72941"
         android:text="Registrarse"
+        android:textSize="20sp"
         app:cornerRadius="8px"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,6 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="¿Ya tienes una cuenta? Inicia sesión"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/btnRegistro"
         app:layout_constraintStart_toStartOf="@+id/btnRegistro"

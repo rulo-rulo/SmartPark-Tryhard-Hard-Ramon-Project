@@ -1,86 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <!-- Botón de Volver -->
+    <!-- Botón Volver -->
     <Button
         android:id="@+id/atras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="40dp"
         android:backgroundTint="@color/red"
         android:text="Volver"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="2px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Título -->
+    <!-- Título "Cambiar" -->
+
+    <!-- Título "nombre" -->
+
+    <!-- Texto para el nombre -->
     <TextView
         android:id="@+id/title1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Cambiar"
-        android:textSize="45dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/title2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="74dp"
-        android:text="nombre"
-        android:textAlignment="viewEnd"
-        android:textSize="45dp"
-        android:textStyle="bold" />
-
-    <!-- Texto para el correo electrónico -->
-    <TextView
-        android:id="@+id/textEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:text="Introduzca su nuevo nombre:"
+        android:layout_marginTop="68dp"
+        android:text="Cambiar nombre"
         android:textAlignment="center"
-        android:textSize="18dp" />
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/atras" />
 
-    <!-- Campo para el correo electrónico -->
+    <TextView
+        android:id="@+id/textNombre"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Introduzca su nuevo nombre:"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title1" />
+
+    <!-- Input para el nombre -->
     <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="50dp"
-        android:background="@color/grey"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:padding="8dp"
-        android:text="" />
-
+        android:id="@+id/input_nombre"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:inputType="text"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/textNombre"
+        app:layout_constraintStart_toStartOf="@+id/textNombre"
+        app:layout_constraintTop_toBottomOf="@id/textNombre" />
 
     <!-- Botón Confirmar -->
     <Button
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/red"
         android:text="Confirmar cambio de nombre"
-        android:textAlignment="center"
         android:textSize="14sp"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="2px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_nombre" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

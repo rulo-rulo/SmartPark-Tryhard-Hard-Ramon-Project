@@ -5,7 +5,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,10 +21,9 @@ public class CambiarNombre extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.cambiar_nombre);
 
-        editNombre = findViewById(R.id.editEmail); // aquí se ingresa el nuevo nombre
+        editNombre = findViewById(R.id.confirmarContraseña); // aquí se ingresa el nuevo nombre
         btnConfirm = findViewById(R.id.btnConfirm);
         volverBtn = findViewById(R.id.atras);
 

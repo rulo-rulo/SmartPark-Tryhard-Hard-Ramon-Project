@@ -25,8 +25,9 @@ public class CambiarCorreo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cambiar_correo);
 
-        editEmail = findViewById(R.id.editEmail);
-        editContrasena = findViewById(R.id.contraseñaCorreo);
+
+        editEmail = findViewById(R.id.input_correo);
+        editContrasena = findViewById(R.id.input_codigo);
         btnConfirm = findViewById(R.id.btnConfirm);
         volverBtn = findViewById(R.id.atras);
         mAuth = FirebaseAuth.getInstance();

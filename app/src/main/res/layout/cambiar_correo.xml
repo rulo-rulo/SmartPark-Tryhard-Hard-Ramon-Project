@@ -1,104 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <!-- Botón de Volver -->
+    <!-- Botón Volver -->
     <Button
         android:id="@+id/atras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:backgroundTint="#E72941"
         android:text="Volver"
-        app:cornerRadius="8px"
+        android:textSize="14sp"
+        app:cornerRadius="2px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Título -->
     <TextView
         android:id="@+id/title1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginTop="48dp"
         android:text="Cambiar correo"
-        android:textSize="45dp"
-        android:textStyle="bold" />
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/atras"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Texto para el correo electrónico -->
+    <!-- Texto correo -->
     <TextView
         android:id="@+id/textEmail"
-        android:layout_width="331dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="Introduzca su nuevo correo electrónico:"
-        android:textAlignment="center"
-        android:textSize="18dp" />
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title1" />
 
-    <!-- Campo para el correo electrónico -->
+    <!-- Input correo -->
     <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="50dp"
-        android:background="@color/grey"
-        android:ems="10"
+        android:id="@+id/input_correo"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
         android:inputType="textEmailAddress"
-        android:padding="8dp"
-        android:text="" />
+        app:layout_constraintEnd_toEndOf="@+id/textEmail"
+        app:layout_constraintStart_toStartOf="@+id/textEmail"
+        app:layout_constraintTop_toBottomOf="@id/textEmail" />
 
-    <!-- Botón Enviar correo -->
+    <!-- Botón enviar correo -->
+    <Button
+        android:id="@+id/btnSendEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#E72941"
+        android:text="Enviar correo"
+        android:textSize="14sp"
+        app:cornerRadius="2px"
+        app:layout_constraintEnd_toEndOf="@+id/btnConfirm"
+        app:layout_constraintStart_toStartOf="@+id/btnConfirm"
+        app:layout_constraintTop_toBottomOf="@id/input_correo" />
 
-    <!-- Texto para el código -->
-
-    <!-- Campo para el código -->
+    <!-- Texto código -->
     <TextView
         android:id="@+id/textCode"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Introduzca su contraseña:"
-        android:textAlignment="center"
-        android:textSize="18dp" />
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Introduzca su código:"
+        android:textAlignment="viewStart"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textEmail"
+        app:layout_constraintStart_toStartOf="@+id/input_correo"
+        app:layout_constraintTop_toBottomOf="@id/btnSendEmail" />
 
+    <!-- Input código -->
     <EditText
-        android:id="@+id/contraseñaCorreo"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="50dp"
-        android:background="@color/grey"
-        android:ems="10"
+        android:id="@+id/input_codigo"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
         android:inputType="number"
-        android:padding="8dp"
-        android:password="true"
-        android:text="" />
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/textEmail"
+        app:layout_constraintStart_toStartOf="@+id/input_correo"
+        app:layout_constraintTop_toBottomOf="@id/textCode" />
 
-    <!-- Botón Confirmar -->
+    <!-- Botón confirmar -->
     <Button
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/red"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#E72941"
         android:text="Confirmar cambio de correo"
-        android:textAlignment="center"
         android:textSize="14sp"
-        app:cornerRadius="8dp" />
+        app:cornerRadius="2px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_codigo" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

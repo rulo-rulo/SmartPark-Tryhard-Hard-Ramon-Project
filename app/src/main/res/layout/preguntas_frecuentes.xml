@@ -6,14 +6,16 @@
 
     <Button
         android:id="@+id/btnVolverPreguntas"
+        style="@style/Btn_Landing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver"
-        style="@style/Btn_Landing"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"/>
+        android:text="Volver"
+        android:textSize="14sp"
+        app:cornerRadius="2px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPreguntas"

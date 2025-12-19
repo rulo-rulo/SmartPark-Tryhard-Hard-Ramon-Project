@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Al mapa"
+        app:cornerRadius="2px"
         app:layout_constraintEnd_toEndOf="@+id/textView15"
         app:layout_constraintStart_toStartOf="@+id/textView15"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
@@ -82,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Reservar"
+        app:cornerRadius="2px"
         app:layout_constraintEnd_toEndOf="@+id/textView16"
         app:layout_constraintStart_toStartOf="@+id/textView16"
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
