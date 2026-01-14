@@ -214,34 +214,33 @@ public class ReservaActivity extends AppCompatActivity {
 
     private void programarNotificaciones() {
 
+        // 🔹 Programar notificación para el día siguiente
         try {
-            SimpleDateFormat sdf =
-                    new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date fechaReserva = sdf.parse(fechaSeleccionada);
+            if (fechaReserva != null) {
+                // Sumar 1 día → fecha de fin
+                long triggerTime = fechaReserva.getTime() + (24 * 60 * 60 * 1000);
 
-            if (fechaReserva == null) return;
+                Intent notiIntent = new Intent(this, ReservaNotificationReceiver.class);
+                notiIntent.putExtra("nombreParking", nombreParking);
 
-            AlarmManager alarmManager =
-                    (AlarmManager) getSystemService(ALARM_SERVICE);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                        this,
+                        (int) System.currentTimeMillis(),
+                        notiIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
 
-            // --- Día antes ---
-            long diaAntes = fechaReserva.getTime()
-                    - (24 * 60 * 60 * 1000);
-
-            programarAlarma(alarmManager,
-                    diaAntes,
-                    "Recuerda tu reserva mañana en " + nombreParking);
-
-            // --- Mismo día (8:00) ---
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(fechaReserva);
-            cal.set(Calendar.HOUR_OF_DAY, 8);
-            cal.set(Calendar.MINUTE, 0);
-
-            programarAlarma(alarmManager,
-                    cal.getTimeInMillis(),
-                    "Hoy tienes una reserva en " + nombreParking);
-
+                android.app.AlarmManager alarmManager = (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
+                if (alarmManager != null) {
+                    alarmManager.setExact(
+                            android.app.AlarmManager.RTC_WAKEUP,
+                            triggerTime,
+                            pendingIntent
+                    );
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

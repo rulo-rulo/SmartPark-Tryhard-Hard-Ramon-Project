@@ -125,6 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         datosUsuario.put("nombre", nombre);
                                         datosUsuario.put("correo", correo);
                                         datosUsuario.put("uid", user.getUid());
+                                        datosUsuario.put("rfid", "");
 
                                         // Para un ID incremental "manual"
                                         db.collection("usuarios")

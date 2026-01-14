@@ -31,6 +31,10 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -158,13 +162,44 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                            db.collection("usuarios").document(user.getUid())
+                                    .get()
+                                    .addOnSuccessListener(doc -> {
+                                        if (!doc.exists()) {
+                                            Map<String, Object> nuevoUsuario = new HashMap<>();
+                                            nuevoUsuario.put("nombre", user.getDisplayName());
+                                            nuevoUsuario.put("correo", user.getEmail());
+                                            nuevoUsuario.put("fotoPerfil",
+                                                    user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
+                                            nuevoUsuario.put("uid", user.getUid());
+                                            nuevoUsuario.put("rfid", ""); // 👈 campo vacío al registrarse
+
+                                            db.collection("usuarios")
+                                                    .document(user.getUid())
+                                                    .set(nuevoUsuario)
+                                                    .addOnSuccessListener(aVoid ->
+                                                            Toast.makeText(this, "Cuenta creada con Google", Toast.LENGTH_SHORT).show()
+                                                    )
+                                                    .addOnFailureListener(e ->
+                                                            Toast.makeText(this, "Error guardando datos en Firestore", Toast.LENGTH_SHORT).show()
+                                                    );
+                                        }
+                                    })
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Error comprobando Firestore", Toast.LENGTH_SHORT).show()
+                                    );
+                        }
+
                         Toast.makeText(this, "Bienvenido, " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, HomePage.class));
                         finish();
+
                     } else {
                         Toast.makeText(this, "Error en la autenticación con Firebase", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
 }
