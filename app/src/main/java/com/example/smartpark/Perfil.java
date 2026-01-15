@@ -226,7 +226,7 @@ public class Perfil extends AppCompatActivity {
         if (user == null) return;
 
         String uid = user.getUid();
-        StorageReference ref = storage.getReference().child("foto_perfil/" + uid + ".jpg");
+        StorageReference ref = storage.getReference().child("foto_perfil/" + uid + "/perfil.jpg");
 
         ref.putFile(uri)
                 .addOnSuccessListener(taskSnapshot -> ref.getDownloadUrl()
