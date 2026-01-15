@@ -108,7 +108,7 @@ public class Perfil extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // 🔹 Si el documento existe, carga los datos desde Firestore
+                        // Si el documento existe, carga los datos desde Firestore
                         String nombreUsuario = documentSnapshot.getString("nombre");
                         String correoUsuario = documentSnapshot.getString("correo");
                         String fotoUrl = documentSnapshot.getString("fotoPerfil");
@@ -127,7 +127,7 @@ public class Perfil extends AppCompatActivity {
                         }
 
                     } else {
-                        // 🔹 Si no existe, probablemente es login con Google → crear registro Firestore
+                        // Si no existe, probablemente es login con Google → crear registro Firestore
                         String nombreGoogle = user.getDisplayName();
                         String correoGoogle = user.getEmail();
                         String fotoGoogle = user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null;

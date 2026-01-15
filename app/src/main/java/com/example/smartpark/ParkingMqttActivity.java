@@ -84,7 +84,7 @@ public class ParkingMqttActivity extends AppCompatActivity implements MqttCallba
     }
 
     // ----------------------------------------------------------
-    // 🔥 FIX REAL → Enviar JSON como Kotlin {"led":1}
+    // Enviar JSON como Kotlin {"led":1}
     // ----------------------------------------------------------
     private void enviarComandoLed(int valor) {
         try {

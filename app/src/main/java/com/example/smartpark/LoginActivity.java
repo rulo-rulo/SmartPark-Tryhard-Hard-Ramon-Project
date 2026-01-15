@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                                             nuevoUsuario.put("fotoPerfil",
                                                     user.getPhotoUrl() != null ? user.getPhotoUrl().toString() : null);
                                             nuevoUsuario.put("uid", user.getUid());
-                                            nuevoUsuario.put("rfid", ""); // 👈 campo vacío al registrarse
+                                            nuevoUsuario.put("rfid", ""); // campo vacío al registrarse
 
                                             db.collection("usuarios")
                                                     .document(user.getUid())
