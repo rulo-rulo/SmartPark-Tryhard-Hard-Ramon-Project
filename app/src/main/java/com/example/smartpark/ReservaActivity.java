@@ -56,7 +56,7 @@ public class ReservaActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        // 🔔 Crear canal de notificaciones (obligatorio Android 8+)
+        // Crear canal de notificaciones (obligatorio Android 8+)
         crearCanalNotificaciones();
 
         parkingId = getIntent().getStringExtra("parkingId");
@@ -214,7 +214,7 @@ public class ReservaActivity extends AppCompatActivity {
 
     private void programarNotificaciones() {
 
-        // aProgramar notificación para el día siguiente
+        // Programar notificación para el día siguiente
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date fechaReserva = sdf.parse(fechaSeleccionada);
