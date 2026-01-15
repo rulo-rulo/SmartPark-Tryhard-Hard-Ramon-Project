@@ -214,7 +214,7 @@ public class ReservaActivity extends AppCompatActivity {
 
     private void programarNotificaciones() {
 
-        // Programar notificación para el día siguiente
+        // aProgramar notificación para el día siguiente
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             Date fechaReserva = sdf.parse(fechaSeleccionada);
